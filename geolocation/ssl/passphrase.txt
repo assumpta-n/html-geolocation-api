@@ -1,3 +1,0 @@
-Enter PEM pass phrase: "openserver"
-Enter pass phrase for server.key: "openserver"
-A challenge password []: "keyserver"
