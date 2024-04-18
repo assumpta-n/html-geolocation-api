@@ -9,7 +9,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
         }
-        
         button {
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -17,19 +16,30 @@
             margin-right: 10px;
             border: none;
         }
-        .context-btn {
+        .check-context-btn {
             background-color: aquamarine;
-        }
-        .location-btn {
-            background-color: plum;
-
         }
     
     </style>
 </head>
 <body>
-    <h1>Geolocation Tutorial Starter Template</h1>
-    <button class="context-btn">Check Context</button>
-    <button class="location-btn">Get Location</button>
+    <h1>Geolocation Tutorial</h1>
+    <!-- Add an OnClick event attribute to the #checkContext button -->
+    <button 
+        id="checkContext" 
+        class="check-context-btn" 
+        onclick="checkSecureContext()" 
+    >
+        Check Context
+    </button>
+    <script>
+        function checkSecureContext() {
+            if (window.isSecureContext) { //Execute this piece of code the 'isSecureContext' boolean is TRUE
+                console.log("Secure Context detected")
+            } else {////Execute this piece of code the 'isSecureContext' boolean is FALSE
+                console.log("This window is not secure")
+            }
+        }
+    </script>
 </body>
 </html>
