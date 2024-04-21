@@ -34,11 +34,14 @@
     </button>
     <script>
         function checkSecureContext() {
-            if (window.isSecureContext) { //Execute this piece of code the 'isSecureContext' boolean is TRUE
+            if (window.isSecureContext) { //Execute this piece of code if the 'isSecureContext' boolean is TRUE
                 console.log("Secure Context detected")
-            } else {////Execute this piece of code the 'isSecureContext' boolean is FALSE
+            } else {//Execute this piece of code if the 'isSecureContext' boolean is FALSE
                 console.log("This window is not secure")
             }
+        }
+        function onGeoLocationSuccess(location) {
+            console.log("The geolocation object is, " + location)
         }
     </script>
 </body>
