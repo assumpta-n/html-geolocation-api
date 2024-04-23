@@ -13,18 +13,27 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             padding: 10px 20px;
-            margin-right: 10px;
             border: none;
-        }
+            border-radius: 4px;
+            margin-right: 10px;
+            /* Styles added because of the #getLocation button*/
+            margin-bottom: 20px; 
+            min-width: 200px; 
+        }   
         .check-context-btn {
             background-color: aquamarine;
+        }
+        /* Specifies background-color of the #getLocation button  */
+        .get-location-btn {
+            background-color:plum; 
         }
     
     </style>
 </head>
 <body>
     <h1>Geolocation Tutorial</h1>
-    <!-- Add an OnClick event attribute to the #checkContext button -->
+    <!-- Add onclick event listener for the checkSecureContext 
+        function to the #checkContext button -->
     <button 
         id="checkContext" 
         class="check-context-btn" 
@@ -32,16 +41,48 @@
     >
         Check Context
     </button>
+    <!-- Add onclick event listener for the getLocation  
+        function to the #getLocation button -->
+    <button 
+    id="getLocation" 
+    class="get-location-btn" 
+    onclick="getLocation()" 
+>
+    Get Location
+</button>
     <script>
         function checkSecureContext() {
-            if (window.isSecureContext) { //Execute this piece of code if the 'isSecureContext' boolean is TRUE
+            if (window.isSecureContext) { 
                 console.log("Secure Context detected")
-            } else {//Execute this piece of code if the 'isSecureContext' boolean is FALSE
+            } else {
                 console.log("This window is not secure")
             }
         }
-        function onGeoLocationSuccess(location) {
-            console.log("The geolocation object is, " + location)
+        function onGeoLocationSuccess(geolocationPosition) {
+            let latitude = geolocationPosition.coords.latitude
+            let longitude = geolocationPosition.coords.longitude
+            console.log(geolocationPosition)
+            console.log("The device coordinates are, " +  latitude + ", " + longitude)
+        }
+        function onGeoLocationError(geolocationError) {
+            console.log(geolocationError)
+            console.log("Error: " + geolocationError.code + "," + geolocationError.message)
+        }
+        const geolocationOptions = {
+            maximumAge: 0, // Use the default value of this property
+            enableHighAccuracy: false, // Use the default value of this property
+            timeout: 0 // Do not give the getCurrentPosition method any time to return the location  
+        }
+        function getLocation() {  
+            if(navigator.geolocation) { //If the device's browser supports geolocation
+                navigator.geolocation.getCurrentPosition(
+                    onGeoLocationSuccess, 
+                    onGeoLocationError, 
+                    geolocationOptions //Add options object to the getCurrentPosition method
+                )
+            } else {////If the device's browser doesn't supports geolocation
+                console.log("Geolocation is not supported by this browser")
+            }
         }
     </script>
 </body>
