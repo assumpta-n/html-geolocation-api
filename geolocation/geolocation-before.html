@@ -27,7 +27,22 @@
         .get-location-btn {
             background-color:plum; 
         }
-    
+        .coordinates {
+            border: 1px solid #D0D0D0;
+            margin-top: 10px;
+            width: 60%;
+            min-width: 200px;
+            display: none;
+        }
+        .coordinates div {
+            margin-top: -20px;
+        }
+        .bold {
+            font-weight:500;
+        }
+        h3 {
+            /* margin-bottom: -4px; */
+        }
     </style>
 </head>
 <body>
@@ -50,6 +65,25 @@
 >
     Get Location
 </button>
+<button 
+    onclick="updatePageWithLocation (400, 500)"
+    style="background-color:lightpink"
+    >
+        Update Location
+</button>
+<fieldset class="coordinates" id="coordinates"> 
+    <legend><h3 class="bold">Location coordinates</h3></legend>
+    <div>
+        <p>
+            <span>Latitude:</span>
+            <span class="bold" id="latitude"></span>
+        </p>
+        <p>
+            <span>Longitude: </span>
+            <span class="bold" id="longitude"></span>
+        </p>
+    </div>
+</fieldset>
     <script>
         function checkSecureContext() {
             if (window.isSecureContext) { 
@@ -71,7 +105,7 @@
         const geolocationOptions = {
             maximumAge: 0, // Use the default value of this property
             enableHighAccuracy: false, // Use the default value of this property
-            timeout: 0 // Do not give the getCurrentPosition method any time to return the location  
+            // timeout: 0 // Do not give the getCurrentPosition method any time to return the location  
         }
         function getLocation() {  
             if(navigator.geolocation) { //If the device's browser supports geolocation
@@ -80,9 +114,17 @@
                     onGeoLocationError, 
                     geolocationOptions //Add options object to the getCurrentPosition method
                 )
-            } else {////If the device's browser doesn't supports geolocation
+            } else {//If the device's browser doesn't supports geolocation
                 console.log("Geolocation is not supported by this browser")
             }
+        }
+        function updatePageWithLocation (lat, long) {
+            const coordinates = document.getElementById("coordinates")
+            const latitude = document.getElementById("latitude")
+            const longitude = document.getElementById("longitude")
+            coordinates.style.display = "block"
+            latitude.innerText = lat
+            longitude.innerText = long
         }
     </script>
 </body>
