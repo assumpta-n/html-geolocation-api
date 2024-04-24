@@ -24,9 +24,9 @@
             box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 15px;
         }   
         button:active {
-            box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 5px;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 3px;
             position: relative;
-            top: 2px;
+            top: 3px;
 
         }
         .check-context-btn {
@@ -72,7 +72,7 @@
     Get Location
 </button>
 <button 
-    onclick=""
+    onclick="updateLocation()" 
     style="background-color:lightpink"
     >
         Update Location
@@ -125,7 +125,6 @@
                 console.log("Geolocation is not supported by this browser")
             }
         }
-
         function updatePageWithLocation (lat, long) {
             const coordinates = document.getElementById("coordinates")
             const latitude = document.getElementById("latitude")
@@ -134,9 +133,17 @@
             latitude.innerText = lat
             longitude.innerText = long
         }
-        // function watchLocation() {
-
-        // }
+        function updateLocation() {
+            if(navigator.geolocation) { //If the device's browser supports geolocation
+                navigator.geolocation.watchPosition(
+                    onGeoLocationSuccess, 
+                    onGeoLocationError, 
+                    geolocationOptions //Add options object to the getCurrentPosition method
+                )
+            } else {//If the device's browser doesn't supports geolocation
+                console.log("Geolocation is not supported by this browser")
+            }
+        }        
     </script>
 </body>
 </html>
