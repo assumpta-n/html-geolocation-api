@@ -63,7 +63,7 @@
     Get Location
 </button>
 <button 
-    onclick="updatePageWithLocation (400, 500)"
+    onclick=""
     style="background-color:lightpink"
     >
         Update Location
@@ -92,6 +92,7 @@
         function onGeoLocationSuccess(geolocationPosition) {
             let latitude = geolocationPosition.coords.latitude
             let longitude = geolocationPosition.coords.longitude
+            updatePageWithLocation (latitude, longitude)
             console.log(geolocationPosition)
             console.log("The device coordinates are, " +  latitude + ", " + longitude)
         }
@@ -115,6 +116,7 @@
                 console.log("Geolocation is not supported by this browser")
             }
         }
+
         function updatePageWithLocation (lat, long) {
             const coordinates = document.getElementById("coordinates")
             const latitude = document.getElementById("latitude")
@@ -123,6 +125,9 @@
             latitude.innerText = lat
             longitude.innerText = long
         }
+        // function watchLocation() {
+
+        // }
     </script>
 </body>
 </html>
