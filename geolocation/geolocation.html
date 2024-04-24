@@ -19,7 +19,16 @@
             /* Styles added because of the #getLocation button*/
             margin-bottom: 20px; 
             min-width: 200px; 
+        }
+        button:hover {
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 15px;
         }   
+        button:active {
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 5px;
+            position: relative;
+            top: 2px;
+
+        }
         .check-context-btn {
             background-color: aquamarine;
         }
@@ -69,7 +78,7 @@
         Update Location
 </button>
 <fieldset class="coordinates" id="coordinates"> 
-    <legend><h3 class="bold">Location coordinates</h3></legend>
+    <legend><h3>Location coordinates</h3></legend>
     <div>
         <p>
             <span>Latitude:</span>
