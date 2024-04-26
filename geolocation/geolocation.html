@@ -35,13 +35,16 @@
         /* Specifies background-color of the #getLocation button  */
         .get-location-btn {
             background-color:plum; 
+        } 
+        .update-location-btn {
+            background-color:lightpink;
+
         }
         .coordinates {
             border: 1px solid #D0D0D0;
             margin-top: 10px;
             width: 60%;
             min-width: 200px;
-            display: none;
         }
         .coordinates div {
             margin-top: -20px;
@@ -62,18 +65,17 @@
     >
         Check Context
     </button>
-    <!-- Add onclick event listener for the getLocation  
-        function to the #getLocation button -->
     <button 
     id="getLocation" 
     class="get-location-btn" 
-    onclick="getLocation()" 
+    onclick="getLocation('getCurrentPosition')" 
 >
     Get Location
 </button>
-<button 
-    onclick="updateLocation()" 
-    style="background-color:lightpink"
+<button
+    id = "updateLocation"
+    class="update-location-btn"
+    onclick="getLocation('watchPosition')" 
     >
         Update Location
 </button>
@@ -82,11 +84,13 @@
     <div>
         <p>
             <span>Latitude:</span>
+            <!-- Empty span which will eventuall display latitude  -->
             <span class="bold" id="latitude"></span>
         </p>
         <p>
             <span>Longitude: </span>
-            <span class="bold" id="longitude"></span>
+            <!-- Empty span which will eventuall display longitude  -->
+            <span class="bold" id="longitude"></span> 
         </p>
     </div>
 </fieldset>
@@ -101,7 +105,8 @@
         function onGeoLocationSuccess(geolocationPosition) {
             let latitude = geolocationPosition.coords.latitude
             let longitude = geolocationPosition.coords.longitude
-            updatePageWithLocation (latitude, longitude)
+            //Call the function which updates the web page with coordinates
+            updatePageWithLocation (latitude, longitude) 
             console.log(geolocationPosition)
             console.log("The device coordinates are, " +  latitude + ", " + longitude)
         }
@@ -114,36 +119,31 @@
             enableHighAccuracy: false, // Use the default value of this property
             // timeout: 0 // Do not give the getCurrentPosition method any time to return the location  
         }
-        function getLocation() {  
+        function getLocation(geolocationMethod) {  
             if(navigator.geolocation) { //If the device's browser supports geolocation
-                navigator.geolocation.getCurrentPosition(
-                    onGeoLocationSuccess, 
-                    onGeoLocationError, 
-                    geolocationOptions //Add options object to the getCurrentPosition method
-                )
-            } else {//If the device's browser doesn't supports geolocation
+                if(geolocationMethod === "getCurrentPosition") {
+                    navigator.geolocation.getCurrentPosition(
+                        onGeoLocationSuccess, 
+                        onGeoLocationError, 
+                        geolocationOptions 
+                    )
+                } else if(geolocationMethod === "watchPosition") {
+                    navigator.geolocation.watchPosition(
+                        onGeoLocationSuccess, 
+                        onGeoLocationError, 
+                        geolocationOptions 
+                    )
+                }
+            } else {//If the device's browser doesn't support geolocation
                 console.log("Geolocation is not supported by this browser")
             }
         }
-        function updatePageWithLocation (lat, long) {
-            const coordinates = document.getElementById("coordinates")
+        function updatePageWithLocation (lat, lng) {
             const latitude = document.getElementById("latitude")
             const longitude = document.getElementById("longitude")
-            coordinates.style.display = "block"
-            latitude.innerText = lat
-            longitude.innerText = long
-        }
-        function updateLocation() {
-            if(navigator.geolocation) { //If the device's browser supports geolocation
-                navigator.geolocation.watchPosition(
-                    onGeoLocationSuccess, 
-                    onGeoLocationError, 
-                    geolocationOptions //Add options object to the getCurrentPosition method
-                )
-            } else {//If the device's browser doesn't supports geolocation
-                console.log("Geolocation is not supported by this browser")
-            }
-        }        
+            latitude.innerText = lat //Display the latitude in the span with the id #latitude
+            longitude.innerText = lng //Display the longitude in the span with the id #longitude
+        } 
     </script>
 </body>
 </html>
