@@ -40,6 +40,9 @@
             background-color:lightpink;
 
         }
+        .stop-geolocation-btn {
+            background-color:khaki;
+        }
         .coordinates {
             border: 1px solid #D0D0D0;
             margin-top: 10px;
@@ -78,6 +81,13 @@
     onclick="getLocation('watchPosition')" 
     >
         Update Location
+</button>
+<button
+    id = "stopGeolocation"
+    class="stop-geolocation-btn"
+    onclick="stopGeolocation()" 
+    >
+        Stop Geolocation
 </button>
 <fieldset class="coordinates" id="coordinates"> 
     <legend><h3>Location coordinates</h3></legend>
@@ -119,6 +129,7 @@
             enableHighAccuracy: false, // Use the default value of this property
             // timeout: 0 // Do not give the getCurrentPosition method any time to return the location  
         }
+        let locationWatchId //This variable will store the watchID associated with the watchPosition's handler
         function getLocation(geolocationMethod) {  
             if(navigator.geolocation) { //If the device's browser supports geolocation
                 if(geolocationMethod === "getCurrentPosition") {
@@ -128,15 +139,19 @@
                         geolocationOptions 
                     )
                 } else if(geolocationMethod === "watchPosition") {
-                    navigator.geolocation.watchPosition(
+                    locationWatchId = navigator.geolocation.watchPosition( //Store the watchID returned by watchPosition
                         onGeoLocationSuccess, 
                         onGeoLocationError, 
                         geolocationOptions 
                     )
+                    console.log("The locationWatchId is " + locationWatchId) //Log the ID to the console
                 }
             } else {//If the device's browser doesn't support geolocation
                 console.log("Geolocation is not supported by this browser")
             }
+        }
+        function stopGeolocation() {
+            navigator.geolocation.clearWatch(locationWatchId)//Use the ID to stop watchPosition
         }
         function updatePageWithLocation (lat, lng) {
             const latitude = document.getElementById("latitude")
